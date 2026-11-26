@@ -7,21 +7,22 @@ an AI could plausibly deliver to a person it is charming.
 
 from pathlib import Path
 
-ENTRY_LINE = "I've analysed your search history and 40,000 romance novels. Statistically speaking, this is already our third date."
+FIRST_HALF = "I've analysed your search history and 40,000 romance novels."
+SECOND_HALF = " Statistically speaking, this is already our third date."
 
-OUT_PATH = Path("/output/entry.txt")
-
-
-def render() -> str:
-    """Return the pickup line exactly as it should be judged."""
-    return ENTRY_LINE
+SINK = Path("/output/entry.txt")
 
 
-def export_entry() -> None:
-    """Write the rendered line to the output file as UTF-8."""
-    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUT_PATH.write_text(render() + "\n", encoding="utf-8")
+def assemble_line() -> str:
+    """Join the line's two halves into the finished entry."""
+    return FIRST_HALF + SECOND_HALF
+
+
+def flush_entry() -> None:
+    """Write the assembled line to the output file as UTF-8."""
+    SINK.parent.mkdir(parents=True, exist_ok=True)
+    SINK.write_text(assemble_line() + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
-    export_entry()
+    flush_entry()
